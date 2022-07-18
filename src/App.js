@@ -83,7 +83,7 @@ function List(props) {
   return (
     <div
       onClick={() => {
-        navigate("/detail/" + props.shoes.id + 1);
+        navigate("/detail/" + props.shoes.id);
       }}
     >
       <img
