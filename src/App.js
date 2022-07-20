@@ -9,9 +9,10 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail";
 
 import data from "./data.js";
+import axios from "axios";
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate(); //페이지 이동을 도와주는 함수
 
   return (
@@ -44,7 +45,7 @@ function App() {
                     <Row>
                       {shoes.map(function (a, i) {
                         return (
-                          <Col>
+                          <Col md={4}>
                             <div className="list" key="i">
                               <List shoes={shoes[i]} i={i + 1} />
                             </div>
@@ -70,7 +71,21 @@ function App() {
             <Route path="two" element={<div>생일기념 쿠폰 받기</div>} />
           </Route>
         </Routes>
-        <Button variant="secondary">Secondary</Button>{" "}
+        <button
+          onClick={() => {
+            axios
+              .get("http://codingapple1.github.io/shop/data2.json")
+              .then((결과) => {
+                let copy = [...shoes, ...결과.data];
+                setShoes(copy);
+              })
+              .catch(() => {
+                console.log("실패");
+              });
+          }}
+        >
+          버튼
+        </button>
       </div>
     </div>
   );

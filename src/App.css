@@ -1,10 +1,9 @@
-.main-bg{
-  height:1000px;
-  background-image:url(./img/black-t-shirts-with-copy-space.jpg);
+.main-bg {
+  height: 1000px;
+  background-image: url(./img/black-t-shirts-with-copy-space.jpg);
   background-size: cover;
   background-position: center;
 }
-
 
 .App {
   text-align: center;
