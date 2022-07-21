@@ -4,17 +4,20 @@ import { Button } from "react-bootstrap";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
-import { useState } from "react";
+import { useState, createContext } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail";
-
 import data from "./data.js";
 import axios from "axios";
+import Cart from "./routes/Cart";
+
+export let Context1 = createContext(); //보관함
 
 function App() {
   let [shoes, setShoes] = useState(data);
   let [click, setClick] = useState(0);
   let navigate = useNavigate(); //페이지 이동을 도와주는 함수
+  let [재고] = useState([10, 11, 12]);
 
   return (
     <div className="App">
@@ -41,7 +44,7 @@ function App() {
               <div>
                 {" "}
                 <div className="main-bg"></div>
-                <div>
+                <div className="card">
                   <Container>
                     <Row>
                       {shoes.map(function (a, i) {
@@ -57,45 +60,60 @@ function App() {
           public 폴더내의 이미지파일을 사용할때는 이 문법을 쓰세요~*/}
                     </Row>
                   </Container>
+                  <button
+                    onClick={() => {
+                      setClick(click + 1);
+                      console.log(click);
+                      let num = click + 2;
+
+                      click < 2
+                        ? axios
+                            .get(
+                              "http://codingapple1.github.io/shop/data" +
+                                num +
+                                ".json"
+                            )
+                            .then((결과) => {
+                              let copy = [...shoes, ...결과.data];
+                              setShoes(copy);
+                            })
+                            .catch(() => {
+                              console.log("실패");
+                            })
+                        : alert("더이상 더보기 할 수 없습니다.");
+
+                      // axios.post('/asdfasd', {name:'kim'}) //서버로 데이터 보내기
+                      // Promise.all([axios.get('/url1'),axios.et('/url2')]).then(())  두개의 데이터를 각각의 url에서 요청할때
+                      // "{"name":"kim"}" <- json data임
+                    }}
+                  >
+                    더보기
+                  </button>
                 </div>
               </div>
             }
           />
-          <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+          <Route
+            path="/detail/:id"
+            element={
+              // state 공유하는법
+              <Context1.Provider value={{ 재고, shoes }}>
+                <Detail shoes={shoes} />
+              </Context1.Provider>
+            }
+          />
+          <Route path="/cart" element={<Cart />}></Route>
           <Route path="/about" element={<About />}>
             <Route path="member" element={<div>멤버임</div>} />
             <Route path="location" element={<div>로케이션임</div>} />
           </Route>
           <Route path="*" element={<div>잘못된 주소입니다.</div>} />
+
           <Route path="/event" element={<Event />}>
             <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>} />
             <Route path="two" element={<div>생일기념 쿠폰 받기</div>} />
           </Route>
         </Routes>
-        <button
-          onClick={() => {
-            setClick(click + 1);
-            console.log(click);
-
-            click < 2
-              ? axios
-                  .get("http://codingapple1.github.io/shop/data2.json")
-                  .then((결과) => {
-                    let copy = [...shoes, ...결과.data];
-                    setShoes(copy);
-                  })
-                  .catch(() => {
-                    console.log("실패");
-                  })
-              : alert("더이상 더보기 할 수 없습니다.");
-
-            // axios.post('/asdfasd', {name:'kim'}) //서버로 데이터 보내기
-            // Promise.all([axios.get('/url1'),axios.et('/url2')]).then(())  두개의 데이터를 각각의 url에서 요청할때
-            // "{"name":"kim"}" <- json data임
-          }}
-        >
-          더보기
-        </button>
       </div>
     </div>
   );

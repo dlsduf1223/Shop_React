@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { cleanup } from "@testing-library/react";
+import Nav from "react-bootstrap/Nav";
+
+import { Context1 } from "../App";
 
 function Detail(props) {
   useEffect(() => {
@@ -14,16 +17,26 @@ function Detail(props) {
       clearTimeout(a); //useEffect 동작전에 실행되는 코드
     };
   }, []); //[]의 state가 장착될때 1회만 사용이 되도록 하는 dependency, 재렌더링되어도 실행시키지 않도록
-  let [alert, setAlert] = useState(true);
 
+  let [alert, setAlert] = useState(true);
   let { id } = useParams(); //본체의 코드 라우터패스에 :idx가 그 자리에 남음
   let 찾은상품 = props.shoes.find(function (x) {
     return x.id == id;
   });
+  let num1 = parseInt(id) + 1;
+  let [탭, 탭변경] = useState(0);
+
+  let [fade2, setFade2] = useState("");
+  useEffect(() => {
+    setFade2("end");
+    return () => {
+      setFade2("");
+    };
+  }, []);
 
   return (
     <div>
-      <div className="container">
+      <div className={"container start " + fade2}>
         {alert == true ? (
           <div className="alert alert-warning">2초 이내 구매시 할인</div>
         ) : null}
@@ -31,7 +44,7 @@ function Detail(props) {
         <div className="row">
           <div className="col-md-6">
             <img
-              src={"https://codingapple1.github.io/shop/shoes" + id + ".jpg"}
+              src={"https://codingapple1.github.io/shop/shoes" + num1 + ".jpg"}
               width="100%"
             />
           </div>
@@ -44,7 +57,67 @@ function Detail(props) {
             <button className="btn btn-danger">주문하기</button>
           </div>
         </div>
+        <Nav variant="tabs" defaultActiveKey="link0">
+          <Nav.Item>
+            <Nav.Link
+              eventKey="link0"
+              onClick={(e) => {
+                탭변경(0);
+              }}
+            >
+              리뷰
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              eventKey="link1"
+              onClick={(e) => {
+                탭변경(1);
+              }}
+            >
+              문의
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              eventKey="link2"
+              onClick={(e) => {
+                탭변경(2);
+              }}
+            >
+              버튼2
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
+        <TabContent 탭={탭} shoes={props.shoes} />
       </div>
+    </div>
+  );
+}
+
+function TabContent(props) {
+  let [fade, setFade] = useState("");
+  let { 재고 } = useContext(Context1); //보관함을 해체해주는 함수
+
+  useEffect(() => {
+    let a = setTimeout(() => {
+      setFade("end");
+    }, 100);
+    return () => {
+      clearTimeout(a);
+      setFade("");
+    };
+  }, [props.탭]); //useEffect를 사용해서 css사용 시점 조절하기
+
+  return (
+    <div className={`start ${fade}`}>
+      {
+        [
+          <div>{props.shoes[0].title}</div>,
+          <div>{재고}</div>,
+          <div>내용2</div>,
+        ][props.탭]
+      }
     </div>
   );
 }

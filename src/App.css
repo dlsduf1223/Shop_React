@@ -1,12 +1,24 @@
+.start {
+  opacity: 0;
+}
+.end {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
 .main-bg {
   height: 1000px;
+  padding: 50px;
   background-image: url(./img/black-t-shirts-with-copy-space.jpg);
   background-size: cover;
   background-position: center;
 }
-
+.card {
+  padding: 50px;
+}
 .App {
   text-align: center;
+  /* padding: 80px; */
 }
 
 .App-logo {
