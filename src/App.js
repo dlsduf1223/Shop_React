@@ -13,6 +13,7 @@ import axios from "axios";
 
 function App() {
   let [shoes, setShoes] = useState(data);
+  let [click, setClick] = useState(0);
   let navigate = useNavigate(); //페이지 이동을 도와주는 함수
 
   return (
@@ -73,15 +74,24 @@ function App() {
         </Routes>
         <button
           onClick={() => {
-            axios
-              .get("http://codingapple1.github.io/shop/data2.json")
-              .then((결과) => {
-                let copy = [...shoes, ...결과.data];
-                setShoes(copy);
-              })
-              .catch(() => {
-                console.log("실패");
-              });
+            setClick(click + 1);
+            console.log(click);
+
+            click < 2
+              ? axios
+                  .get("http://codingapple1.github.io/shop/data2.json")
+                  .then((결과) => {
+                    let copy = [...shoes, ...결과.data];
+                    setShoes(copy);
+                  })
+                  .catch(() => {
+                    console.log("실패");
+                  })
+              : alert("더이상 더보기 할 수 없습니다.");
+
+            // axios.post('/asdfasd', {name:'kim'}) //서버로 데이터 보내기
+            // Promise.all([axios.get('/url1'),axios.et('/url2')]).then(())  두개의 데이터를 각각의 url에서 요청할때
+            // "{"name":"kim"}" <- json data임
           }}
         >
           더보기
