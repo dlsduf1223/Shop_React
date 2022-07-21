@@ -52,6 +52,9 @@ function Cart() {
           ))}
         </tbody>
       </Table>
+      <Button variant="secondary" size="lg" onClick={() => {}}>
+        결제하기
+      </Button>{" "}
     </div>
   );
 }

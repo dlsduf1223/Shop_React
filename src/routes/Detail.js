@@ -1,4 +1,6 @@
 import React, { useContext, useEffect } from "react";
+import "../App.css";
+
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { cleanup } from "@testing-library/react";
@@ -124,18 +126,49 @@ function TabContent(props) {
       setFade("");
     };
   }, [props.탭]); //useEffect를 사용해서 css사용 시점 조절하기
-
+  let [입력값, set입력값] = useState([""]);
+  let [review, setReview] = useState(["정말 좋아요", "굳입니다."]);
   return (
     <div className={`start ${fade}`}>
       {
         [
-          <div>{props.shoes[0].title}</div>,
+          <div className="review">
+            <input
+              size="40"
+              type="text"
+              placeholder="리뷰를 입력해주세요."
+              onChange={(e) => {
+                set입력값(e.target.value);
+              }}
+              value={입력값}
+            />
+            <button
+              onClick={(e) => {
+                let copy = [...review];
+                copy.unshift(입력값);
+                setReview(copy);
+                set입력값("");
+              }}
+            >
+              등록
+            </button>
+            {review.map(function (a, i) {
+              return <Review review={review} i={i} />;
+            })}
+          </div>,
           <div>{재고}</div>,
           <div>내용2</div>,
         ][props.탭]
       }
     </div>
   );
+  function Review(props) {
+    return (
+      <div className="reviewList">
+        <span>{props.review[props.i]}</span>
+      </div>
+    );
+  }
 }
 
 export default Detail;

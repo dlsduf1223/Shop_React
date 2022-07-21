@@ -24,7 +24,7 @@ function App() {
       <div>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="/">Navbar</Navbar.Brand>
+            <Navbar.Brand href="/">ProjectShop</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link
                 onClick={() => {
@@ -38,7 +38,7 @@ function App() {
                   navigate("/");
                 }} ///navigate(1)뒤로가기, (-1) 앞으로가기
               >
-                Pricing
+                Log-in
               </Nav.Link>
             </Nav>
           </Container>

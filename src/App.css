@@ -1,3 +1,13 @@
+.review {
+  padding-top: 50px;
+}
+
+.reviewList {
+  padding-left: 0px;
+  text-align: left;
+  border-bottom-style: solid;
+}
+
 .start {
   opacity: 0;
 }
