@@ -84,7 +84,7 @@ function App() {
               });
           }}
         >
-          버튼
+          더보기
         </button>
       </div>
     </div>
