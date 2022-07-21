@@ -49,8 +49,8 @@ function App() {
                     <Row>
                       {shoes.map(function (a, i) {
                         return (
-                          <Col md={4}>
-                            <div className="list" key="i">
+                          <Col md={4} key={i}>
+                            <div className="list">
                               <List shoes={shoes[i]} i={i + 1} />
                             </div>
                           </Col>

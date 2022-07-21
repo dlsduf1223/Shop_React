@@ -3,10 +3,16 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { cleanup } from "@testing-library/react";
 import Nav from "react-bootstrap/Nav";
+import { addItem } from "../store/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Context1 } from "../App";
 
 function Detail(props) {
+  let state = useSelector((state) => {
+    return state;
+  });
+  let dispatch = useDispatch();
   useEffect(() => {
     //mount, update(재렌더링)될때 실행해줍니다. useEffect 안의 코드는  html렌더링 후 동작합니다. 성능에 관한 문제.. 서버에서 데이터 가져오는 작업, 타이머 장착
 
@@ -33,7 +39,7 @@ function Detail(props) {
       setFade2("");
     };
   }, []);
-
+  console.log(찾은상품);
   return (
     <div>
       <div className={"container start " + fade2}>
@@ -54,7 +60,14 @@ function Detail(props) {
             <h4 className="pt-5">{찾은상품.title}</h4>
             <p>{찾은상품.content}</p>
             <p>{찾은상품.price}원</p>
-            <button className="btn btn-danger">주문하기</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                addItem([...찾은상품]);
+              }}
+            >
+              주문하기
+            </button>
           </div>
         </div>
         <Nav variant="tabs" defaultActiveKey="link0">
