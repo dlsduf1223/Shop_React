@@ -39,7 +39,7 @@ function Detail(props) {
       setFade2("");
     };
   }, []);
-  console.log(찾은상품);
+
   return (
     <div>
       <div className={"container start " + fade2}>
@@ -63,7 +63,10 @@ function Detail(props) {
             <button
               className="btn btn-danger"
               onClick={() => {
-                addItem([...찾은상품]);
+                dispatch(
+                  addItem({ id: 찾은상품.id, name: 찾은상품.title, count: 1 })
+                );
+                console.log("aaa");
               }}
             >
               주문하기

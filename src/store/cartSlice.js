@@ -17,10 +17,17 @@ let cart1 = createSlice({
       let 번호 = state.findIndex((a) => {
         return a.id === action.payload; //어레이 안에서 원하는 id 찾는법
       });
-      state[번호].count > 0 ? state[번호].count-- : (state[번호].count = 0);
+      state[번호].count > 1 ? state[번호].count-- : state.splice(번호, 1);
     },
     addItem(state, action) {
-      state.push(action.payload);
+      let 번호 = state.findIndex((a) => {
+        return a.id === action.payload.id; //어레이 안에서 원하는 id 찾는법
+      });
+      if (state[번호] != null) {
+        state[번호].count++;
+      } else {
+        state.push(action.payload);
+      }
     },
   },
 });

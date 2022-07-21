@@ -26,7 +26,13 @@ function App() {
           <Container>
             <Navbar.Brand href="/">Navbar</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href="/Cart">Cart</Nav.Link>
+              <Nav.Link
+                onClick={() => {
+                  navigate("/cart");
+                }}
+              >
+                Cart
+              </Nav.Link>
               <Nav.Link
                 onClick={() => {
                   navigate("/");

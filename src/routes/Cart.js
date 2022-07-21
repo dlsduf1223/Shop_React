@@ -10,6 +10,8 @@ function Cart() {
   let dispatch = useDispatch();
   //redux에서 저장한 state를 갔다쓰기 위한 문법
 
+  console.log(state);
+
   return (
     <div>
       <Table striped bordered hover>
@@ -28,6 +30,7 @@ function Cart() {
               <td>
                 <Button
                   variant="primary"
+                  size="sm"
                   onClick={() => {
                     dispatch(addCount(state.cart1[i].id));
                   }}
@@ -37,6 +40,7 @@ function Cart() {
                 {state.cart1[i].count}{" "}
                 <Button
                   variant="primary"
+                  size="sm"
                   onClick={() => {
                     dispatch(subCount(state.cart1[i].id));
                   }}
