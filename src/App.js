@@ -141,7 +141,7 @@ function List(props) {
       />
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.content}</p>
-      <p>{props.shoes.price}원</p>
+      <p>{props.shoes.price.toLocaleString("ko-KR")}원</p>
     </div>
   );
 }

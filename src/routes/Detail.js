@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Context1 } from "../App";
 
 function Detail(props) {
+  let obj = { rev: " ss" };
+  localStorage.setItem("data", JSON.stringify(obj));
   let state = useSelector((state) => {
     return state;
   });
@@ -61,7 +63,7 @@ function Detail(props) {
             {/* 현재 url 파라미터 */}
             <h4 className="pt-5">{찾은상품.title}</h4>
             <p>{찾은상품.content}</p>
-            <p>{찾은상품.price}원</p>
+            <p>{찾은상품.price.toLocaleString("ko-KR")}원</p>
             <button
               className="btn btn-danger"
               onClick={() => {
@@ -127,7 +129,7 @@ function TabContent(props) {
     };
   }, [props.탭]); //useEffect를 사용해서 css사용 시점 조절하기
   let [입력값, set입력값] = useState([""]);
-  let [review, setReview] = useState(["정말 좋아요", "굳입니다."]);
+  let [review, setReview] = useState([""]);
   return (
     <div className={`start ${fade}`}>
       {
@@ -153,7 +155,11 @@ function TabContent(props) {
               등록
             </button>
             {review.map(function (a, i) {
-              return <Review review={review} i={i} />;
+              return (
+                <div key={i}>
+                  <Review review={review} i={i} />
+                </div>
+              );
             })}
           </div>,
           <div>{재고}</div>,
